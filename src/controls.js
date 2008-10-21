@@ -59,12 +59,14 @@ Autocompleter.Base = Class.create({
     this.options.tokens       = this.options.tokens || [];
     this.options.frequency    = this.options.frequency || 0.4;
     this.options.minChars     = this.options.minChars || 1;
+    this.options.updateWidth  = (this.options.updateWidth || this.element.getWidth()) + "px";
     this.options.onShow       = this.options.onShow ||
       function(element, update){
         if(!update.style.position || update.style.position=='absolute') {
           update.style.position = 'absolute';
           Position.clone(element, update, {
             setHeight: false,
+            setWidth: false,
             offsetTop: element.offsetHeight
           });
         }
@@ -90,6 +92,7 @@ Autocompleter.Base = Class.create({
   },
 
   show: function() {
+    this.update.setStyle({ width: this.options.updateWidth });
     if(Element.getStyle(this.update, 'display')=='none') this.options.onShow(this.element, this.update);
     if(!this.iefix &&
       (Prototype.Browser.IE) &&
